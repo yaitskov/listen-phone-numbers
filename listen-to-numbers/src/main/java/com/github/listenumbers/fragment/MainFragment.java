@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.listenumbers.R;
+import com.github.listenumbers.generator.PatternParser;
+import com.github.listenumbers.generator.TextGenerator;
 import com.github.listenumbers.inject.InjectingFragment;
 
 import javax.inject.Inject;
@@ -25,6 +27,8 @@ import butterknife.OnClick;
  */
 public class MainFragment extends InjectingFragment
         implements TextToSpeech.OnInitListener {
+    public static final String CURRENT_PATTERN = "current-pattern";
+    public static final String DEFAULT_PATTERN = "ddd dd ddd";
     @InjectView(R.id.btnListen)
     Button btnListen;
 
@@ -35,6 +39,9 @@ public class MainFragment extends InjectingFragment
     SharedPreferences preferences;
 
     TextToSpeech textToSpeech;
+
+    private TextGenerator generator;
+    private String currentNumber;
 
     @Override
     public void onAttach(Activity activity) {
@@ -62,15 +69,43 @@ public class MainFragment extends InjectingFragment
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
             btnListen.setEnabled(true);
+            generate();
+            speak();
         } else {
             Toast.makeText(getActivity(), "Speech synsethis is not available",
                     Toast.LENGTH_LONG).show();
         }
     }
 
+    private void updatePattern() {
+        generator = new PatternParser().parse(
+                preferences.getString(CURRENT_PATTERN, DEFAULT_PATTERN));
+
+    }
+
+    private void generate() {
+        if (generator == null) {
+            updatePattern();
+        }
+        currentNumber = generator.generate();
+    }
+
+    private void speak() {
+        textToSpeech.speak(currentNumber, TextToSpeech.QUEUE_ADD, null);
+    }
+
     @OnClick(R.id.btnListen)
     public void listen() {
-        textToSpeech.speak(txtNumber.getText().toString(), TextToSpeech.QUEUE_ADD, null);
+        String answer = txtNumber.getText().toString();
+        if (answer.equals(currentNumber)) {
+            generate();
+            Toast.makeText(getActivity(), "Ok. Listen to the next.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Error. Try again.",
+                    Toast.LENGTH_SHORT).show();
+        }
         txtNumber.getText().clear();
+        speak();
     }
 }
