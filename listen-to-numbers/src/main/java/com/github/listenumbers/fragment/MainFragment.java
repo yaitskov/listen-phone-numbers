@@ -1,10 +1,15 @@
 package com.github.listenumbers.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +20,8 @@ import com.github.listenumbers.R;
 import com.github.listenumbers.generator.PatternParser;
 import com.github.listenumbers.generator.TextGenerator;
 import com.github.listenumbers.inject.InjectingFragment;
+
+import java.util.zip.Inflater;
 
 import javax.inject.Inject;
 
@@ -56,6 +63,12 @@ public class MainFragment extends InjectingFragment
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +88,54 @@ public class MainFragment extends InjectingFragment
             Toast.makeText(getActivity(), "Speech synsethis is not available",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnu_add_pattern:
+                editPattern("");
+                return true;
+            case R.id.mnu_edit_pattern:
+                editPattern(preferences.getString(CURRENT_PATTERN, DEFAULT_PATTERN));
+                return true;
+            case R.id.mnu_remove_pattern:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void editPattern(String defaultText) {
+        final EditText input = new EditText(getActivity());
+        input.setText(defaultText);
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Pattern")
+                .setMessage(defaultText.isEmpty() ? "New pattern" : "Pattern modification")
+                .setView(input)
+                .setPositiveButton(defaultText.isEmpty() ? "Add" : "Update",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newPattern = input.getText().toString();
+                                preferences.edit()
+                                        .putString(CURRENT_PATTERN, newPattern.isEmpty()
+                                                ? DEFAULT_PATTERN
+                                                : newPattern)
+                                        .commit();
+                                updatePattern();
+                            }
+                        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 
     private void updatePattern() {

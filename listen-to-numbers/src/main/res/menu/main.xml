@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mnu_add_pattern"
+          android:title="Add a pattern"/>
+
+    <item android:id="@+id/mnu_remove_pattern"
+          android:title="Remove the pattern"/>
+
+    <item android:id="@+id/mnu_edit_pattern"
+          android:title="Edit the pattern"/>
+</menu>
