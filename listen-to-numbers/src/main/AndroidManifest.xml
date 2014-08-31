@@ -14,9 +14,6 @@
         android:label="@string/app_name"
         android:name=".ListenNumbersApplication"
         android:theme="@style/AppTheme" >
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name="com.github.listenumbers.activity.MainActivity"
             android:label="@string/app_name"
