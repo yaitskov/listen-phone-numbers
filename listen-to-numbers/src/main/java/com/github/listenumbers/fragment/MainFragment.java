@@ -82,8 +82,7 @@ public class MainFragment extends InjectingFragment
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
             btnListen.setEnabled(true);
-            generate();
-            speak();
+            updatePattern();
         } else {
             Toast.makeText(getActivity(), "Speech synsethis is not available",
                     Toast.LENGTH_LONG).show();
@@ -141,14 +140,12 @@ public class MainFragment extends InjectingFragment
     private void updatePattern() {
         generator = new PatternParser().parse(
                 preferences.getString(CURRENT_PATTERN, DEFAULT_PATTERN));
-
+        generate();
     }
 
     private void generate() {
-        if (generator == null) {
-            updatePattern();
-        }
         currentNumber = generator.generate();
+        speak();
     }
 
     private void speak() {
@@ -163,10 +160,10 @@ public class MainFragment extends InjectingFragment
             Toast.makeText(getActivity(), "Ok. Listen to the next.",
                     Toast.LENGTH_SHORT).show();
         } else {
+            speak();
             Toast.makeText(getActivity(), "Error. Try again.",
                     Toast.LENGTH_SHORT).show();
         }
         txtNumber.getText().clear();
-        speak();
     }
 }
