@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion '20'
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 20
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        release {
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'LICENSE.txt'
+    }
+}
+
+dependencies {
+    compile 'com.squareup.dagger:dagger-compiler:1.2.1'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+    compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'com.google.android.gms:play-services:5.2.08'
+    compile 'com.jakewharton:butterknife:5.1.0'
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    androidTestCompile 'junit:junit:4.11'
+}

@@ -1,0 +1,6 @@
+# ignore neo4j missing class annotations
+# model artifact classes are used for REST requests/responses.
+# JVM doesn't throw ClassNotFoundException for annotations.
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
