@@ -8,6 +8,8 @@
         android:hint="Enter the number which you heard"
         android:id="@+id/txtNumber"
         android:text=""
+        android:layout_weight="1"
+        android:textSize="@dimen/input_font_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -15,13 +17,17 @@
         android:text="Check and listen to the next"
         android:enabled="false"
         android:id="@+id/btnListen"
+        android:textSize="@dimen/button_font_size"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:text="Show the number"
         android:id="@+id/btnShowNumber"
+        android:textSize="@dimen/button_font_size"
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>
