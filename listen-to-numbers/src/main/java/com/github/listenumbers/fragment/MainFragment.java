@@ -79,7 +79,13 @@ public class MainFragment extends InjectingFragment
         txtNumber.requestFocus();
         txtNumber.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return keyCode == KeyEvent.KEYCODE_ENTER;
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                        listen();
+                    }
+                    return true;
+                }
+                return false;
             }
         });
         return view;
