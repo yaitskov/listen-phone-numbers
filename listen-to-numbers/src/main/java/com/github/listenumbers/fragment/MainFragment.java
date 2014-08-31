@@ -111,8 +111,6 @@ public class MainFragment extends InjectingFragment
             case R.id.mnu_edit_pattern:
                 editPattern(preferences.getString(CURRENT_PATTERN, DEFAULT_PATTERN));
                 return true;
-            case R.id.mnu_remove_pattern:
-                return true;
             default:
                 return false;
         }
