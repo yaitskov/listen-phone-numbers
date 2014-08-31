@@ -167,4 +167,12 @@ public class MainFragment extends InjectingFragment
         }
         txtNumber.getText().clear();
     }
+
+    @OnClick(R.id.btnShowNumber)
+    public void showNumber() {
+        if (currentNumber != null) {
+            Toast.makeText(getActivity(), currentNumber, Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
 }
