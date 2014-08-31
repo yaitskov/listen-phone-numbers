@@ -22,6 +22,6 @@ public class MainFragment extends InjectingFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.boot, container, false);
+        return inflater.inflate(R.layout.main_fragment, container, false);
     }
 }
