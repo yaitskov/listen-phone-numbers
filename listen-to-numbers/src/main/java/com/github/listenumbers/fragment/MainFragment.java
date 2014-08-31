@@ -111,9 +111,6 @@ public class MainFragment extends InjectingFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mnu_add_pattern:
-                editPattern("");
-                return true;
             case R.id.mnu_edit_pattern:
                 editPattern(preferences.getString(CURRENT_PATTERN, DEFAULT_PATTERN));
                 return true;
