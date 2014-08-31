@@ -17,11 +17,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.listenumbers.R;
+import com.github.listenumbers.SpacelessEqualizer;
 import com.github.listenumbers.generator.PatternParser;
 import com.github.listenumbers.generator.TextGenerator;
 import com.github.listenumbers.inject.InjectingFragment;
-
-import java.util.zip.Inflater;
+import com.google.common.base.Equivalence;
 
 import javax.inject.Inject;
 
@@ -47,6 +47,7 @@ public class MainFragment extends InjectingFragment
 
     TextToSpeech textToSpeech;
 
+    private Equivalence<String> answerChecker = new SpacelessEqualizer();
     private TextGenerator generator;
     private String currentNumber;
 
@@ -155,7 +156,7 @@ public class MainFragment extends InjectingFragment
     @OnClick(R.id.btnListen)
     public void listen() {
         String answer = txtNumber.getText().toString();
-        if (answer.equals(currentNumber)) {
+        if (answerChecker.equivalent(currentNumber, answer)) {
             generate();
             Toast.makeText(getActivity(), "Ok. Listen to the next.",
                     Toast.LENGTH_SHORT).show();
