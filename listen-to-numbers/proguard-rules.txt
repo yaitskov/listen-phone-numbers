@@ -1,6 +1,36 @@
 # ignore neo4j missing class annotations
 # model artifact classes are used for REST requests/responses.
 # JVM doesn't throw ClassNotFoundException for annotations.
+
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
+
+# Dagger
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
+
+-dontwarn dagger.internal.codegen.*
+-dontwarn javax.annotation.concurrent.*
+-dontwarn javax.annotation.processing.*
+-dontwarn javax.lang.model.type.*, javax.lang.model.util.*, javax.lang.model.element.*
+-dontwarn javax.annotation.processing.*
+-dontwarn javax.lang.model.element.*
+-dontwarn javax.tools.*
+-dontwarn javax.lang.model.*
+-dontwarn javax.annotation.*
+-dontwarn sun.misc.*
+
+
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
