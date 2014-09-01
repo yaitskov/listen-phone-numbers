@@ -24,6 +24,8 @@ import com.github.listenumbers.generator.TextGenerator;
 import com.github.listenumbers.inject.InjectingFragment;
 import com.google.common.base.Equivalence;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -94,6 +96,17 @@ public class MainFragment extends InjectingFragment
     @Override
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
+            if (textToSpeech.isLanguageAvailable(Locale.ENGLISH) != TextToSpeech.LANG_AVAILABLE) {
+                Toast.makeText(getActivity(), "English language is not available.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (textToSpeech.setLanguage(Locale.ENGLISH) != TextToSpeech.LANG_AVAILABLE) {
+                Toast.makeText(getActivity(), "English language is not available.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
             btnListen.setEnabled(true);
             updatePattern();
         } else {
