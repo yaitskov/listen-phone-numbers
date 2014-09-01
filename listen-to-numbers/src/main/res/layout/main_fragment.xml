@@ -7,6 +7,7 @@
     <EditText
         android:hint="Enter the number which you heard"
         android:id="@+id/txtNumber"
+        android:inputType="number"
         android:text=""
         android:layout_weight="1"
         android:textSize="@dimen/input_font_size"
